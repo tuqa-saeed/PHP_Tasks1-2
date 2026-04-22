@@ -1,107 +1,118 @@
 <?php 
-$title="Array in PHP";
-$colors = array('white', 'green', 'red');
-echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Array 1 ================</div>";
 
-echo"<ul>";
-foreach($colors as $color) {
-    echo "<li>$color</li>";
-}
-echo"</ul>";
-echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Array 2 =================</div>";
-$cities= array( 
-"Italy"=>"Rome", 
-"Luxembourg"=>"Luxembourg", 
-"Belgium"=> "Brussels", 
-"Denmark"=>"Copenhagen", 
-"Finland"=>"Helsinki", 
-"France" => "Paris", 
-"Slovakia"=>"Bratislava", 
-"Slovenia"=>"Ljubljana",
- "Germany" => "Berlin", 
- "Greece" => "Athens", 
- "Ireland"=>"Dublin", 
-"Netherlands"=>"Amsterdam", 
-"Portugal"=>"Lisbon", 
-"Spain"=>"Madrid" ); 
+class ArrayOperations {
 
-foreach($cities as $country=> $capital){
-    echo "The capital of $country is $capital <br>";
-}
-echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Array 3 =================</div>";
+    private $data;
 
- $color = array (4 => 'white', 6 => 'green', 11=> 'red'); 
- echo reset($color);
+    public function __construct($array) {
+        $this->data = $array;
+    }
 
- echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
- ============ Array 4 =================</div>";
+    public function displayList() {
+        echo "<ul>";
+        foreach ($this->data as $color) {
+            echo "<li>$color</li>";
+        }
+        echo "</ul>";
+    }
 
- $array = [1, 2, 3, 4, 5];
- array_splice($array, 3, 0, '$');  
- echo implode(' ', $array);  
- 
- echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
- ============ Array 5 =================</div>";
+    public function displayAssociative() {
+        $result = "";
+        foreach ($this->data as $key => $value){
+            $result .= "The capital of $key is $value <br>";
+        }
+        return $result;
+    }
 
- $fruits = array("d" => "lemon", "a" => "orange", "b" => "banana", "c" => "apple"); 
-echo ksort($fruits);
-foreach($fruits as $key=>$value){
-    echo "$key = $value <br>";
+    public function getFirstElement() {
+        if (empty($this->data)) {
+            return null;
+        }
+        return reset($this->data);
+    }
 
-}
-echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Array 6 =================</div>";
+    public function insertAt($position, $value) {
+        array_splice($this->data, $position, 0, $value);
+        return $this->data;
+    }
 
- $temperatures = array( 78, 60, 62, 68, 71, 68, 73, 85, 66, 64, 76, 63, 75, 76, 73, 68, 62, 73, 72, 65, 74, 62, 62, 65, 64, 68, 73, 75, 79, 73 );
- $average = array_sum($temperatures) / count($temperatures);
-    sort($temperatures);
- $lowest = array_slice($temperatures, 0, 5); 
- $highest = array_slice($temperatures, -5); 
- echo "Average Temperature is: " . round($average, 1) . "<br>"; 
- echo "List of five lowest temperatures: " . implode(", ", $lowest) . "<br>"; 
- echo "List of five highest temperatures: " . implode(", ", $highest) . "<br>";
+    public function analyzeTemperatures() {
+        $average = array_sum($this->data) / count($this->data);
 
+        $temp = $this->data;
+        sort($temp);
 
+        $lowest = array_slice($temp, 0, 5);
+        $highest = array_slice($temp, -5);
 
- echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Array 7 =================</div>";
- $array1 = array("color" => "red", 2, 4); 
- $array2 = array("a", "b", "color" => "green", "shape" => "trapezoid", 4); 
- $mergedArray = array_merge($array1, $array2); 
-    print_r($mergedArray);
+        return [
+            'average' => round($average, 1),
+            'lowest' => $lowest,
+            'highest' => $highest
+        ];
+    }
 
+    public function mergeWith($newArray) {
+        return array_merge($this->data, $newArray);
+    }
 
- echo "<div style='background-color:pink; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Function Convert Arr To Uppercase =================</div>";
-$colors = array("red", "blue", "white", "yellow");
-
-function Convert_Arr_To_Uppercase($arr) {
-    $arr = array_map('strtoupper', $arr); 
-
-    echo implode(' ', $arr);  
-
-  
+    public function toUppercase() {
+        return array_map('strtoupper', $this->data);
+    }
 }
 
-Convert_Arr_To_Uppercase($colors); 
+echo "<h2>=== Array 1 ===</h2>";
+$colors = ['white', 'green', 'red'];
+$obj1 = new ArrayOperations($colors);
 
+$obj1->displayList();
+print_r($obj1->toUppercase());
 
+echo "<hr>";
 
+echo "<h2>=== Array 2 ===</h2>";
+$cities = [
+    "Italy"=>"Rome",
+    "France"=>"Paris",
+    "Germany"=>"Berlin"
+];
+$obj2 = new ArrayOperations($cities);
+
+echo $obj2->displayAssociative();
+
+echo "<hr>";
+
+echo "<h2>=== Array 3 ===</h2>";
+$colorKeys = [4 => 'white', 6 => 'green', 11=> 'red'];
+$obj3 = new ArrayOperations($colorKeys);
+
+echo $obj3->getFirstElement();
+
+echo "<hr>";
+
+echo "<h2>=== Array 4 ===</h2>";
+$arr = [1,2,3,4,5];
+$obj4 = new ArrayOperations($arr);
+
+print_r($obj4->insertAt(3, '$'));
+
+echo "<hr>";
+
+echo "<h2>=== Array 5 (Merge) ===</h2>";
+$array1 = ["color" => "red", 2, 4];
+$array2 = ["a", "b", "color" => "green"];
+
+$obj5 = new ArrayOperations($array1);
+
+print_r($obj5->mergeWith($array2));
+
+echo "<hr>";
+
+echo "<h2>=== Array 6 (Temperatures) ===</h2>";
+$temps = [78, 60, 62, 68, 71, 68, 73, 85, 66];
+
+$obj6 = new ArrayOperations($temps);
+
+print_r($obj6->analyzeTemperatures());
 
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo "$title" ?> </title>
-</head>
-<body>
-   
-</body>
-</html>
