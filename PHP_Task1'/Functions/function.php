@@ -1,60 +1,53 @@
 <?php
-$title="Functions in PHP";
-echo "<div style='background-color:lightblue; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Function Prime Num ================</div>";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $num = intval($_POST["number"]);
-    $isPrime = ($num > 1);
-    for ($i = 2; $i * $i <= $num; $i++) {
-        if ($num % $i == 0) {
-            $isPrime = false;
-            break;
-        }
+
+// Class responsible for checking if a number is prime
+class PrimeChecker {
+
+    // Property to store the number
+    private $number;
+
+    // Constructor to initialize the number
+    public function __construct($number) {
+        $this->number = $number;
     }
-    echo "<p>$num " . ($isPrime ? "is a prime number" : "is not a prime number") . "</p>";
+
+    // Method to check if the number is prime
+    public function isPrime() {
+
+        // Numbers less than or equal to 1 are not prime
+        if ($this->number <= 1) {
+            return false;
+        }
+
+        // Loop from 2 up to square root of the number
+        for ($i = 2; $i * $i <= $this->number; $i++) {
+
+            // If divisible, then it's not prime
+            if ($this->number % $i == 0) {
+                return false;
+            }
+        }
+
+        // If no divisors found, it's prime
+        return true;
+    }
+
+    // Method to return a readable result message
+    public function getResult() {
+        return $this->isPrime()
+            ? "$this->number is a prime number"
+            : "$this->number is not a prime number";
+    }
 }
 
+
+// Create an object and test the number
+$num = 10;
+
+// Instantiate the class with a number
+$checker = new PrimeChecker($num);
+
+// Print the result
+echo $checker->getResult();
+
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo "$title" ?> </title>
-</head>
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-        form {
-            background: white;
-            padding: 20px;
-            display: inline-block;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
-            font-size: 16px;
-        }
-        p {
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
-<body>
-<form method="post">
-        <label>Enter a number:</label>
-        <input type="number" name="number" required>
-        <button type="submit">Check</button>
-    </form>
-
-   
-  
-</body>
-</html>
