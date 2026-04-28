@@ -23,7 +23,7 @@ class TextReverser {
 }
 
 
-// 🔽 Object usage
+//  Object usage
 
 $inputText = "Hello World";
 
