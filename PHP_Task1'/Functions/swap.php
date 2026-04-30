@@ -27,3 +27,86 @@ $swap->swapnum();
 echo $swap->getResult();
 
 ?>
+
+###############################################################
+//other soluation 
+
+<?php
+
+class SwapTwoNum {
+
+    private $x, $y;
+
+    public function __construct($x, $y) {
+        $this->x = $x;
+        $this->y = $y;
+    }
+
+    public function swap($method = "temp") {
+
+        switch ($method) {
+
+            case "math":
+                $this->x = $this->x + $this->y;
+                $this->y = $this->x - $this->y;
+                $this->x = $this->x - $this->y;
+                break;
+
+            case "xor":
+                $this->x = $this->x ^ $this->y;
+                $this->y = $this->x ^ $this->y;
+                $this->x = $this->x ^ $this->y;
+                break;
+
+            case "temp":
+                $temp = $this->x;
+                $this->x = $this->y;
+                $this->y = $temp;
+                break;
+
+            default:
+                return "Invalid method";
+        }
+    }
+
+    public function getResult() {
+        return "X = $this->x, Y = $this->y";
+    }
+}
+
+
+// usage
+$swapper = new SwapTwoNum(10, 12);
+
+$swapper->swap("math"); 
+//$swapper->swap("XOR");
+//$swapper->swap("temp");
+echo $swapper->getResult();
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
