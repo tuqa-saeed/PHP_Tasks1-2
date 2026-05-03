@@ -1,22 +1,30 @@
-<?php 
-echo "<div style='background-color:lightblue; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Armstrong ================</div>";
-function isArmstrong($num) {
-    $sum = 0;
-    $n = floor(log10($num)) + 1; 
-    $temp = $num;
+<?php
 
-    while ($temp > 0) {
-        $digit = $temp % 10; 
-        $sum += $digit ** $n; 
-        $temp = floor($temp / 10); 
+class ArmstrongChecker {
+
+    private $number;
+
+    public function __construct($number) {
+        $this->number = $number;
     }
 
-    return $sum == $num;
+    public function isArmstrong() {
+
+        $num = $this->number;
+        $sum = 0;
+
+        while ($num > 0) {
+            $digit = $num % 10;         
+            $sum += $digit * $digit * $digit; 
+            $num = (int)($num / 10);    
+        }
+
+        return $sum == $this->number;
+    }
+
+    public function getResult() {
+        return $this->isArmstrong()
+            ? "$this->number is Armstrong Number"
+            : "$this->number is NOT Armstrong Number";
+    }
 }
-
-$number = 9474;
-echo isArmstrong($number) ? "$number is an Armstrong Number" : "$number is not an Armstrong Number";
-
-
-?>
