@@ -1,17 +1,35 @@
+public function isPalindrome() {
 
+    $text = strtolower($this->text);
+    $clean = "";
 
-<?php 
-echo "<div style='background-color:lightblue; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ Function isPalindrome ================</div>";
-function isPalindrome($str) {
-    $str = preg_replace("/[^A-Za-z0-9]/", "", strtolower($str));
-    
-    return $str === strrev($str);
+    for ($i = 0; $i < strlen($text); $i++) {
+        $char = $text[$i];
+
+        if (
+            ($char >= 'a' && $char <= 'z') ||
+            ($char >= '0' && $char <= '9')
+        ) {
+            $clean .= $char;
+        }
+    }
+
+    $left = 0;
+    $right = strlen($clean) - 1;
+
+    while ($left < $right) {
+        if ($clean[$left] !== $clean[$right]) {
+            return false;
+        }
+        $left++;
+        $right--;
+    }
+
+    return true;
 }
 
 $input = "Eva, can I see bees in a cave?";
-echo isPalindrome($input) ? "Yes, it is a palindrome" : "No, it is not a palindrome";
 
+$obj = new PalindromeChecker($input);
 
-?>
-
+echo $obj->getResult();
