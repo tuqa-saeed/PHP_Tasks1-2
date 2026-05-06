@@ -8,14 +8,27 @@ class ArrayCleaner {
         $this->data = $array;
     }
 
-    public function removeDuplicates() {
-        return array_values(array_unique($this->data));
-    }
+    public function removeDuplicatesManual() {
 
+        $result = [];
+
+        foreach ($this->data as $value) {
+
+            if (!in_array($value, $result)) {
+                $result[] = $value;
+            }
+        }
+
+        return $result;
+    }
 }
 
-$array1 = [2, 4, 7, 4, 8, 4];
 
-$obj = new ArrayCleaner($array1);
 
-print_r($obj->removeDuplicates());
+$array = [2, 4, 7, 4, 8, 4];
+
+$obj = new ArrayCleaner($array);
+
+print_r($obj->removeDuplicatesManual());
+
+?>
