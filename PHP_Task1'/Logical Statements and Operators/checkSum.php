@@ -1,19 +1,26 @@
 <?php
 
-echo "<div style='background-color:lightblue; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ checkSum ================</div>";
-function checkSum($firstInteger, $secondInteger) {
-    return ($firstInteger + $secondInteger == 30) ? "$firstInteger + $secondInteger" : "The sum is not 30 (false)";
+class SumChecker {
+
+    private $firstNumber;
+    private $secondNumber;
+
+    public function __construct($firstNumber, $secondNumber) {
+        $this->firstNumber = $firstNumber;
+        $this->secondNumber = $secondNumber;
+    }
+
+    public function checkSum() {
+
+        $sum = $this->firstNumber + $this->secondNumber;
+
+        if ($sum == 30) {
+            return "The sum is 30";
+        }
+
+        return "The sum is not 30";
+    }
 }
+$obj = new SumChecker(10, 20);
 
-$firstInteger = 10;
-$secondInteger = 10;
-
-$output = checkSum($firstInteger, $secondInteger);
-echo $output; 
-?>
-
-
-
-
-
+echo $obj->checkSum();
