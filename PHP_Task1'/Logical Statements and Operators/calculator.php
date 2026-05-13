@@ -1,36 +1,45 @@
 <?php
-echo "<div style='background-color:lightblue; color: white; font-size: 20px; font-weight: bold; padding: 10px; text-align: center; border-radius: 5px;  margin: 10px auto;'>
-============ calculater ================</div>";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $a = $_POST['num1'];
-    $b = $_POST['num2'];
+class Calculator {
 
-    function add($a, $b) { return $a + $b; }
-    function subtract($a, $b) { return $a - $b; }
-    function multiply($a, $b) { return $a * $b; }
-    function divide($a, $b) {
-        if ($b == 0) {
-            return "Error: Division by zero is not allowed.";
-        } else {
-            return $a / $b;
-        }
+    private $a;
+    private $b;
+
+    // Constructor
+    public function __construct($a, $b) {
+        $this->a = $a;
+        $this->b = $b;
     }
 
-    echo "Addition: " . add($a, $b) . "<br>";
-    echo "Subtraction: " . subtract($a, $b) . "<br>";
-    echo "Multiplication: " . multiply($a, $b) . "<br>";
-    echo "Division: " . divide($a, $b) . "<br>";
+    // Addition
+    public function add() {
+        return $this->a + $this->b;
+    }
+
+    // Subtraction
+    public function subtract() {
+        return $this->a - $this->b;
+    }
+
+    // Multiplication
+    public function multiply() {
+        return $this->a * $this->b;
+    }
+
+    // Division
+    public function divide() {
+
+        if ($this->b == 0) {
+            return "Error: Division by zero is not allowed.";
+        }
+
+        return $this->a / $this->b;
+    }
 }
-?>
 
+$calc = new Calculator(10, 5);
 
-
-<form method="post" action="calculator.php">
-    <label>Enter First Number:</label>
-    <input type="number" name="num1" required><br><br>
-    <label>Enter Second Number:</label>
-    <input type="number" name="num2" required><br><br>
-    <input type="submit" value="Calculate">
-</form>
-
+echo "Addition: " . $calc->add() . "<br>";
+echo "Subtraction: " . $calc->subtract() . "<br>";
+echo "Multiplication: " . $calc->multiply() . "<br>";
+echo "Division: " . $calc->divide() . "<br>";
